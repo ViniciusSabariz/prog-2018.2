@@ -4,7 +4,6 @@
 #include "Usuario.h"
 #include "Registro.h"
 
-
 int testa_novo_usu() {
   int id;
   char nome[100];
