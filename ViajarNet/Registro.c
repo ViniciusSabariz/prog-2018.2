@@ -5,19 +5,40 @@
 
 struct registro {
   Info info;
-	Reg *esq;
-	Reg *dir;
+  Reg *esq;
+  Reg *dir;
 };
-//falta fazer a verificacao das datas e das palavras
+
+int verificarInfo(Info *info){
+  //verificar as strings
+  if(info->mes < 1 || info->mes > 12 ||
+     info->dia < 1 || info->dia > 31 ||
+     info->ano <= 0) { return 0;}
+  if(strlen(info->cod) != 1 || *info->cod <= '0' ||
+     strlen(info->cidade) < 1 && strlen(info->cidade) > 60 ||
+     strlen(info->pais) < 1 && strlen(info->pais) > 30) {
+    return 0;
+  }
+  if(info->mes % 2 == 0 && info->mes < 8) {
+    return info->dia <= 30 ? 1 : 0;
+  } else if(info->mes % 2 != 0 && info->mes > 7) {
+    return info->dia <= 30 ? 1 : 0;
+  }
+  return 1;
+}
+
 
 Reg *novo_reg(Info *info) {   //cria um novo registro e aponta os seus filhos para null
-  Reg *Noh;
+  if (verificarInfo(info)){
+    Reg *Noh;
   Noh = malloc (sizeof(Reg));
   if(Noh == NULL){ return NULL;}
   Noh->info = *info;
   Noh->esq = NULL;
   Noh->dir = NULL;
   return Noh;
+  }
+  return NULL;
 }
 
 int libera_reg(Reg **reg) {

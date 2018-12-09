@@ -10,20 +10,25 @@ struct usuario {
 
 
 Usu *novo_usu(int id, char *nome) {
-  Usu *Noh;                                       //falta fazer a verificação
-  Noh = malloc(sizeof(Noh));
-  Noh->id = id;
-  strcpy(Noh->nome, nome);
-  if (Noh == NULL){
-    return NULL;
+  if (id > 0 && strlen(nome) <= 30){
+    Usu *Noh;                                       
+    Noh = malloc(sizeof(Noh));
+    Noh->id = id;
+    strcpy(Noh->nome, nome);
+    if (Noh == NULL){
+      return NULL;
+    }
+    return Noh;
   }
-  return Noh;
+  return NULL;
+  
 }
 
 int libera_usu(Usu **usu) {
+  if (*usu != NULL){
   free(*usu);
-  if (usu == NULL){
-    return 1;
+  *usu = NULL;
+  return 1;
   }
   return 0;
 }
@@ -31,7 +36,7 @@ int libera_usu(Usu **usu) {
 int acessa_usu(Usu *usu, int *id, char *nome) {
   *id = usu->id;
   strcpy(nome, usu->nome);
-  if (id == usu->id && nome == uau->nome){
+  if (*id == usu->id && strcmp(nome, usu->nome)){
     return 1;
   }
   return 0;
